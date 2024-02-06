@@ -1,2 +1,5 @@
 # Virtual Environment
 VENV
+
+# Cache
+__pycache__
