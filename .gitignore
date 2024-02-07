@@ -3,3 +3,10 @@ VENV
 
 # Cache
 __pycache__
+
+# Migrations
+migrations
+!__init__.py
+
+# databases
+*.sqlite3
