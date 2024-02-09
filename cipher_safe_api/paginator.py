@@ -13,7 +13,8 @@ class CipherSafePagination(PageNumberPagination):
 
     def get_paginated_response(self, data):
         count = len(data)
-        page = int(self.request.GET.get("page"))
+        page = self.request.GET.get("page")
+        page = int(page) if page is not None else 1
         total_count = self.queryset.count()
         total_pages = math.ceil(total_count / self.page_size)
         return Response(

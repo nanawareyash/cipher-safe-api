@@ -132,7 +132,7 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ],
     "DEFAULT_PAGINATION_CLASS": "cipher_safe_api.paginator.CipherSafePagination",
-    "PAGE_SIZE": 3,
+    "PAGE_SIZE": 10,
 }
 
 # Swagger
