@@ -23,15 +23,24 @@ class UserViewSet(ViewSet, GenericViewSet):
         return [permission() for permission in permission_classes]
 
     def list(self, request):
-        page = self.paginate_queryset(self.queryset)
+        new_queryset = self.queryset.order_by("-created_at")
+        page = self.paginate_queryset(new_queryset)
 
         if page is not None:
-            serializer = self.get_serializer(page, many=True)
+            serializer = self.serializer_class(page, many=True)
             return self.get_paginated_response(serializer.data)
 
         serializer = self.serializer_class(page, many=True)
 
         if serializer:
             return Response(serializer.data, status=HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Account Created Successfully!"})
         else:
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
