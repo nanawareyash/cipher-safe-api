@@ -6,7 +6,7 @@ class Users(models.Model):
     name = models.CharField(verbose_name="Name", max_length=100)
     email = models.EmailField(verbose_name="Email", max_length=30)
     country_code = models.CharField(
-        verbose_name="Country Code", max_length=4, blank=True, null=True
+        verbose_name="Country Code", max_length=5, blank=True, null=True
     )
     contact_no = models.CharField(
         verbose_name="Contact No.", max_length=10, blank=True, null=True

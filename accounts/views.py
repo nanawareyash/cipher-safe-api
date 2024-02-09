@@ -38,7 +38,7 @@ class UserViewSet(ViewSet, GenericViewSet):
         if serializer:
             return Response(serializer.data, status=HTTP_200_OK)
         else:
-            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+            return Response({"errors": serializer.errors}, status=HTTP_400_BAD_REQUEST)
 
     # Create user
     def create(self, request):
@@ -47,7 +47,7 @@ class UserViewSet(ViewSet, GenericViewSet):
             serializer.save()
             return Response({"message": "Account Created Successfully!"})
         else:
-            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+            return Response({"errors": serializer.errors}, status=HTTP_400_BAD_REQUEST)
 
     # Get particular user details
     @action(detail=True)
@@ -57,4 +57,4 @@ class UserViewSet(ViewSet, GenericViewSet):
         if serializer:
             return Response({"result": serializer.data})
         else:
-            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+            return Response({"errors": serializer.errors}, status=HTTP_400_BAD_REQUEST)
