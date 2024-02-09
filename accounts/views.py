@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
@@ -22,6 +24,7 @@ class UserViewSet(ViewSet, GenericViewSet):
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
+    # Get all users list
     def list(self, request):
         new_queryset = self.queryset.order_by("-created_at")
         page = self.paginate_queryset(new_queryset)
@@ -37,10 +40,21 @@ class UserViewSet(ViewSet, GenericViewSet):
         else:
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
+    # Create user
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"message": "Account Created Successfully!"})
+        else:
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+    # Get particular user details
+    @action(detail=True)
+    def details(self, request, pk):
+        user = get_object_or_404(self.queryset, pk=pk)
+        serializer = self.serializer_class(user)
+        if serializer:
+            return Response({"result": serializer.data})
         else:
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
