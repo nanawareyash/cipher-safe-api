@@ -1,5 +1,5 @@
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
-from rest_framework.fields import empty
 
 from .models import Users
 
@@ -15,3 +15,8 @@ class UserSerializer(serializers.ModelSerializer):
         if not show_password:
             data.pop("password", None)
         return data
+
+    def create(self, validated_data):
+        password = validated_data.pop("password")
+        validated_data["password"] = make_password(password)
+        return super().create(validated_data)
