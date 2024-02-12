@@ -22,5 +22,5 @@ def validate_contact_number(contact_number):
 
 
 def validate_person_name(name):
-    pattern = r"^[a-zA-Z][a-zA-Z][a-zA-Z]+(([\'\,\.\-][a-zA-Z ])?[a-zA-Z]*)*$"
+    pattern = r"^[a-zA-Z][a-zA-Z][a-zA-Z ]+(([\'\,\.\-][a-zA-Z])?[a-zA-Z]*)*$"
     return re.match(pattern, name) is not None
