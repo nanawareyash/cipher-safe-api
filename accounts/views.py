@@ -18,7 +18,7 @@ class UserViewSet(ViewSet, GenericViewSet):
     pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
 
     def get_permissions(self):
-        if self.action == "list":
+        if self.action == "create":
             permission_classes = [AllowAny]
         else:
             permission_classes = [IsAdminUser]
